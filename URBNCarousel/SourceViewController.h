@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SourceViewController.h
 //  URBNCarousel
 //
 //  Created by Demetri Miller on 10/30/14.

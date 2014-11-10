@@ -1,5 +1,5 @@
 //
-//  FullGalleryViewController.m
+//  DestinationViewController.m
 //  URBNCarousel
 //
 //  Created by Demetri Miller on 11/3/14.
@@ -64,7 +64,6 @@
     } else {
         self.collectionView.hidden = NO;
     }
-
 }
 
 - (UIImage *)imageForGalleryTransition

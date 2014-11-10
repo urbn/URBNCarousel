@@ -1,5 +1,5 @@
 //
-//  FullGalleryViewController.h
+//  DestinationViewController.h
 //  URBNCarousel
 //
 //  Created by Demetri Miller on 11/3/14.
