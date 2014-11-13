@@ -23,7 +23,9 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 
 @property(nonatomic, assign) CGRect originalSelectedCellFrame;
 @property(nonatomic, assign) CGFloat startScale;
+@property(nonatomic, assign) CGFloat springCompletionSpeed;
 @property(nonatomic, assign) CGFloat completionSpeed;
+
 
 @end
 
@@ -38,6 +40,8 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     if (self) {
         self.viewInteractionBlocks = [[NSMapTable alloc] initWithKeyOptions:NSPointerFunctionsWeakMemory valueOptions:NSPointerFunctionsCopyIn capacity:10];
         
+        self.startScale = -1;
+        self.springCompletionSpeed = 0.6;
         self.completionSpeed = 0.2;
         self.interactive = NO;
     }
@@ -45,12 +49,6 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 }
 
 #pragma mark - Convenience
-- (URBNCarouselTransitionView *)configuredTransitionImageViewWithFrame:(CGRect)frame image:(UIImage *)image
-{
-    URBNCarouselTransitionView *view = [[URBNCarouselTransitionView alloc] initWithFrame:frame image:image];
-    return view;
-}
-
 - (void)prepareForTransitionWithContext:(id <UIViewControllerContextTransitioning>)transitionContext
 {
     UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
@@ -135,6 +133,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 
     [self.transitionView removeFromSuperview];
     self.transitionView = nil;
+    self.startScale = -1;
     
     fromView.alpha = 1.0;
     toView.alpha = 1.0;
@@ -161,11 +160,18 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     return vc;
 }
 
+- (CGFloat)transitionViewPercentScaledForStartScale:(CGFloat)startScale
+{
+    CGSize scale = [self scaleForTransform:self.transitionView.transform];
+    CGFloat percent = ((scale.width - self.startScale) / (1 - self.startScale));
+    return percent;
+}
+
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    return 0.7;
+    return 0.5;
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext
@@ -207,31 +213,29 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     UIView *fromView = [self.context viewForKey:UITransitionContextFromViewKey];
     UIView *toView = [self.context viewForKey:UITransitionContextToViewKey];
 
-    fromView.alpha = percent;
-    toView.alpha = (1.0 - percent);
+    fromView.alpha = (1.0 - percent);
+    toView.alpha = percent;
 }
 
-- (void)interactiveTransitionFinished:(BOOL)cancelled
+- (void)interactiveTransitionFinished:(BOOL)cancelled withVelocity:(CGFloat)velocity
 {
-    if (cancelled) {
-        [UIView animateWithDuration:self.completionSpeed animations:^{
-            [self restoreTransitionViewToState:URBNCarouselTransitionStateStart withContext:self.context];
-            
-        } completion:^(BOOL finished) {
-            [self finishTransitionWithContext:self.context];
-            [self.context cancelInteractiveTransition];
-            [self.context completeTransition:!cancelled];
-        }];
-    } else {
-        [UIView animateWithDuration:self.completionSpeed animations:^{
-            [self restoreTransitionViewToState:URBNCarouselTransitionStateEnd withContext:self.context];
-            
-        } completion:^(BOOL finished) {
-            [self finishTransitionWithContext:self.context];
-            [self.context finishInteractiveTransition];
-            [self.context completeTransition:!cancelled];
-        }];
-    }
+    UIView *toView = [self.context viewForKey:UITransitionContextToViewKey];
+    UIView *fromView = [self.context viewForKey:UITransitionContextFromViewKey];
+    
+    [UIView animateWithDuration:self.springCompletionSpeed delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:velocity options:0 animations:^{
+        URBNCarouselTransitionState state = cancelled ? URBNCarouselTransitionStateStart : URBNCarouselTransitionStateEnd;
+        [self restoreTransitionViewToState:state withContext:self.context];
+
+    } completion:^(BOOL finished) {
+        [self finishTransitionWithContext:self.context];
+        [self.context cancelInteractiveTransition];
+        [self.context completeTransition:!cancelled];
+    }];
+    
+    [UIView animateWithDuration:self.completionSpeed animations:^{
+        toView.alpha = cancelled ? 0.0 : 1.0;
+        fromView.alpha = cancelled ? 1.0 : 0.0;
+    } completion:nil];
 }
 
 
@@ -277,23 +281,25 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
                 block(self, pinch.view);
             }
 
-            self.startScale = scale;
             break;
         }
         case UIGestureRecognizerStateChanged: {
+            if (self.startScale < 0) {
+                self.startScale = [self scaleForTransform:self.transitionView.transform].width;
+            }
             self.transitionView.transform = CGAffineTransformScale(self.transitionView.transform, scale, scale);
-            CGSize scale = [self scaleForTransform:self.transitionView.transform];
-            CGFloat percent = (1.0 - scale.width / self.startScale);
-
+            
+            CGFloat percent = [self transitionViewPercentScaledForStartScale:self.startScale];
             pinch.scale = 1;
-            [self updateWithPercent:(percent < 0.0) ? 0.0 : percent];
+            [self updateWithPercent:percent];
             break;
         }
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled: {
-            CGSize scale = [self scaleForTransform:self.transitionView.transform];
-            BOOL cancelled = (scale.width < 2 && scale.height < 2 && self.startScale > 1);
-            [self interactiveTransitionFinished:cancelled];
+            CGFloat percent = [self transitionViewPercentScaledForStartScale:self.startScale];
+
+            BOOL cancelled = (percent < 0.4);
+            [self interactiveTransitionFinished:cancelled withVelocity:pinch.velocity];
             break;
         }
         case UIGestureRecognizerStatePossible:
