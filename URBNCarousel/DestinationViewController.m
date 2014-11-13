@@ -8,7 +8,7 @@
 
 #import "GalleryCollectionViewCell.h"
 #import "DestinationViewController.h"
-
+#import "UIImageView+ImageFrame.h"
 
 @interface DestinationViewController ()
 @property(nonatomic, strong) URBNCarouselTransitionController *transitionController;
@@ -71,14 +71,23 @@
     return self.selectedCell.imageView.image;
 }
 
-- (CGRect)imageFrameForGalleryTransitionWithContainerView:(UIView *)containerView
+- (CGRect)fromImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView
 {
-    CGRect frame;
-    if (self.selectedCell) {
-        frame = [containerView convertRect:self.selectedCell.frame fromView:self.collectionView];
-    } else {
-        frame = [containerView convertRect:self.view.bounds fromView:self.view];
-    }
+    NSAssert(self.selectedCell, @"Cell should be selected for \"from\" transition");
+    CGSize size = [UIImageView aspectFitSizeForImageSize:self.selectedCell.imageView.image.size inRect:self.selectedCell.frame];
+
+    CGFloat originX = CGRectGetMidX(self.view.bounds) - (size.width / 2);
+    CGFloat originY = CGRectGetMidY(self.view.bounds) - (size.height / 2);
+    CGRect frame = CGRectMake(originX, originY, size.width, size.height);
+    return [containerView convertRect:frame fromView:self.collectionView];
+}
+
+- (CGRect)toImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView sourceImageFrame:(CGRect)sourceImageFrame
+{
+    CGSize size = [UIImageView aspectFitSizeForImageSize:sourceImageFrame.size inRect:self.view.bounds];
+    CGFloat originX = CGRectGetMidX(self.view.bounds) - (size.width / 2);
+    CGFloat originY = CGRectGetMidY(self.view.bounds) - (size.height / 2);
+    CGRect frame = CGRectMake(originX, originY, size.width, size.height);
     return frame;
 }
 
@@ -102,10 +111,10 @@
     cell.imageView.image = [UIImage imageNamed:@"150x350"];
 
     typeof(self) __weak __self = self;
-//    [self.transitionController registerInteractiveGesturesWithView:cell interactionBeganBlock:^(GalleryTransitionController *controller, UIView *view) {
-//        __self.selectedCell = (GalleryCollectionViewCell *)cell;
-//        [__self dismissViewControllerAnimated:YES completion:nil];
-//    }];
+    [self.transitionController registerInteractiveGesturesWithView:cell interactionBeganBlock:^(URBNCarouselTransitionController *controller, UIView *view) {
+        __self.selectedCell = (GalleryCollectionViewCell *)cell;
+        [__self dismissViewControllerAnimated:YES completion:nil];
+    }];
     
     return cell;
 }

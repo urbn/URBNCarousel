@@ -79,10 +79,20 @@
     return self.selectedCell.imageView.image;
 }
 
-- (CGRect)imageFrameForGalleryTransitionWithContainerView:(UIView *)containerView
+- (CGRect)fromImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView
 {
     CGRect imageFrame = [self.selectedCell.imageView imageFrame];
     return [containerView convertRect:imageFrame fromView:self.selectedCell];
+}
+
+- (CGRect)toImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView sourceImageFrame:(CGRect)sourceImageFrame
+{
+    CGSize size = [UIImageView aspectFitSizeForImageSize:sourceImageFrame.size inRect:self.selectedCell.imageView.frame];
+    CGRect convertedRect = [containerView convertRect:self.selectedCell.frame fromView:self.collectionView];
+    CGFloat originX = CGRectGetMidX(convertedRect) - (size.width / 2);
+    CGFloat originY = CGRectGetMidY(convertedRect) - (size.height / 2);
+    CGRect imageFrame = CGRectMake(originX, originY, size.width, size.height);
+    return imageFrame;
 }
 
 
@@ -127,11 +137,11 @@
     GalleryCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     cell.imageView.image = [UIImage imageNamed:@"150x350"];
     
-//    typeof(self) __weak __self = self;
-//    [self.transitionController registerInteractiveGesturesWithView:cell interactionBeganBlock:^(URBNCarouselTransitionController *controller, UIView *view) {
-//        __self.selectedCell = (GalleryCollectionViewCell *)cell;
-//        [__self presentGalleryController];
-//    }];
+    typeof(self) __weak __self = self;
+    [self.transitionController registerInteractiveGesturesWithView:cell interactionBeganBlock:^(URBNCarouselTransitionController *controller, UIView *view) {
+        __self.selectedCell = (GalleryCollectionViewCell *)cell;
+        [__self presentGalleryController];
+    }];
     
     return cell;
 }
