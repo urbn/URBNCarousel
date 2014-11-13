@@ -22,7 +22,8 @@ typedef void(^URBNCarouselViewInteractionBeganBlock)(URBNCarouselTransitionContr
 
 @required
 - (UIImage *)imageForGalleryTransition;
-- (CGRect)imageFrameForGalleryTransitionWithContainerView:(UIView *)containerView;
+- (CGRect)fromImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView;
+- (CGRect)toImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView sourceImageFrame:(CGRect)sourceImageFrame;
 
 @end
 
