@@ -2,6 +2,20 @@
 
 @implementation UIImageView (ImageFrame)
 
++ (CGSize)aspectFitSizeForImageSize:(CGSize)imageSize inRect:(CGRect)rect
+{
+    CGFloat hfactor = imageSize.width / rect.size.width;
+    CGFloat vfactor = imageSize.height / rect.size.height;
+    
+    CGFloat factor = fmax(hfactor, vfactor);
+    
+    // Divide the size by the greater of the vertical or horizontal shrinkage factor
+    CGFloat newWidth = imageSize.width / factor;
+    CGFloat newHeight = imageSize.height / factor;
+    
+    return CGSizeMake(newWidth, newHeight);
+}
+
 - (CGRect)imageFrame
 {
     CGSize imageSize = self.image.size;
