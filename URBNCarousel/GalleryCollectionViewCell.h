@@ -11,6 +11,5 @@
 @interface GalleryCollectionViewCell : UICollectionViewCell
 
 @property(nonatomic, strong) UIImageView *imageView;
-@property(nonatomic, copy) void (^pinchGestureBlock)(UICollectionViewCell *cell, UIPinchGestureRecognizer *pinch);
 
 @end
