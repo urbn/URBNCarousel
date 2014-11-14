@@ -6,16 +6,14 @@
 //  Copyright (c) 2014 Demetri Miller. All rights reserved.
 //
 
-#import "ANTGuidedScrollFlowLayout.h"
+#import <URBNCarousel/URBNCarousel.h>
 #import "GalleryCollectionViewCell.h"
-#import "URBNCarouselTransitionController.h"
 #import "DestinationViewController.h"
 #import "SourceViewController.h"
-#import "UIImageView+ImageFrame.h"
 
 @interface SourceViewController ()
 
-@property(nonatomic, strong) ANTGuidedScrollFlowLayout *inlineLayout;
+@property(nonatomic, strong) URBNHorizontalPagedFlowLayout *inlineLayout;
 @property(nonatomic, strong) UICollectionViewFlowLayout *fullSizeLayout;
 @property(nonatomic, strong) URBNCarouselTransitionController *transitionController;
 @property(nonatomic, assign) CGFloat startScale;
@@ -36,7 +34,7 @@
     _fullSizeLayout.minimumInteritemSpacing = 10;
     _fullSizeLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
-    self.inlineLayout = [[ANTGuidedScrollFlowLayout alloc] init];
+    self.inlineLayout = [[URBNHorizontalPagedFlowLayout alloc] init];
     _inlineLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     _inlineLayout.minimumLineSpacing = 15;
     _inlineLayout.minimumInteritemSpacing = 0;
@@ -81,13 +79,13 @@
 
 - (CGRect)fromImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView
 {
-    CGRect imageFrame = [self.selectedCell.imageView imageFrame];
+    CGRect imageFrame = [self.selectedCell.imageView urbn_imageFrame];
     return [containerView convertRect:imageFrame fromView:self.selectedCell];
 }
 
 - (CGRect)toImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView sourceImageFrame:(CGRect)sourceImageFrame
 {
-    CGSize size = [UIImageView aspectFitSizeForImageSize:sourceImageFrame.size inRect:self.selectedCell.imageView.frame];
+    CGSize size = [UIImageView urbn_aspectFitSizeForImageSize:sourceImageFrame.size inRect:self.selectedCell.imageView.frame];
     CGRect convertedRect = [containerView convertRect:self.selectedCell.frame fromView:self.collectionView];
     CGFloat originX = CGRectGetMidX(convertedRect) - (size.width / 2);
     CGFloat originY = CGRectGetMidY(convertedRect) - (size.height / 2);

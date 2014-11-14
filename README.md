@@ -1,10 +1,5 @@
 # URBNCarousel
 
-[![CI Status](http://img.shields.io/travis/Joe/URBNDataSource.svg?style=flat)](https://travis-ci.org/Joe/URBNDataSource)
-[![Version](https://img.shields.io/cocoapods/v/URBNDataSource.svg?style=flat)](http://cocoadocs.org/docsets/URBNDataSource)
-[![License](https://img.shields.io/cocoapods/l/URBNDataSource.svg?style=flat)](http://cocoadocs.org/docsets/URBNDataSource)
-[![Platform](https://img.shields.io/cocoapods/p/URBNDataSource.svg?style=flat)](http://cocoadocs.org/docsets/URBNDataSource)
-
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
