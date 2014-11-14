@@ -1,0 +1,5 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'URBNCarousel', :exclusive => true do
+  pod "URBNCarousel"
+end
