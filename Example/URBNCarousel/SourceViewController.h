@@ -11,7 +11,7 @@
 
 @interface SourceViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, URBNCarouselTransitioning>
 
-@property(nonatomic, strong) UICollectionView *collectionView;
+@property(nonatomic, strong) URBNScrollSyncCollectionView *collectionView;
 
 @end
 

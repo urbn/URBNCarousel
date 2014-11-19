@@ -12,7 +12,7 @@
 
 @interface DestinationViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, URBNCarouselTransitioning>
 
-@property(nonatomic, strong) UICollectionView *collectionView;
+@property(nonatomic, strong) URBNScrollSyncCollectionView *collectionView;
 
 - (id)initWithTransitionController:(URBNCarouselTransitionController *)controller;
 

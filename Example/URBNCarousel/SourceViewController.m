@@ -14,7 +14,6 @@
 @interface SourceViewController ()
 
 @property(nonatomic, strong) URBNHorizontalPagedFlowLayout *inlineLayout;
-@property(nonatomic, strong) UICollectionViewFlowLayout *fullSizeLayout;
 @property(nonatomic, strong) URBNCarouselTransitionController *transitionController;
 @property(nonatomic, assign) CGFloat startScale;
 @property(nonatomic, weak) GalleryCollectionViewCell *selectedCell;
@@ -29,24 +28,30 @@
 {
     [super viewDidLoad];
     
-    self.fullSizeLayout = [[UICollectionViewFlowLayout alloc] init];
-    _fullSizeLayout.itemSize = CGSizeMake(320, 500);
-    _fullSizeLayout.minimumInteritemSpacing = 10;
-    _fullSizeLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    
     self.inlineLayout = [[URBNHorizontalPagedFlowLayout alloc] init];
     _inlineLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     _inlineLayout.minimumLineSpacing = 15;
     _inlineLayout.minimumInteritemSpacing = 0;
     _inlineLayout.itemSize = CGSizeMake(280, 200);
     
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 200) collectionViewLayout:_inlineLayout];
+    self.collectionView = [[URBNScrollSyncCollectionView alloc] initWithFrame:CGRectMake(0, 120, self.view.frame.size.width, 200) collectionViewLayout:_inlineLayout];
     self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast;
     [self.view addSubview:self.collectionView];
     
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     [self.collectionView registerClass:[GalleryCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    
+    typeof(self) __weak __self = self;
+    [self.collectionView setDidSyncBlock:^(UICollectionView *collectionView, NSIndexPath *indexPath) {
+        UICollectionViewLayoutAttributes *attr = [__self.inlineLayout layoutAttributesForItemAtIndexPath:indexPath];
+        [__self.collectionView setContentOffset:CGPointMake(attr.frame.origin.x - __self.inlineLayout.sectionInset.left, 0) animated:NO];
+        __self.selectedCell = (GalleryCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+        
+        if (!__self.selectedCell) {
+            NSLog(@"selected cell is nil");
+        }
+    }];
     
     self.transitionController = [[URBNCarouselTransitionController alloc] init];
 }
@@ -57,7 +62,9 @@
 {
     DestinationViewController *vc = [[DestinationViewController alloc] initWithTransitionController:self.transitionController];
     vc.transitioningDelegate = self.transitionController;
-    [self presentViewController:vc animated:YES completion:nil];
+    [self presentViewController:vc animated:YES completion:^{
+        [self.collectionView registerForSynchronizationWithCollectionView:vc.collectionView];
+    }];
 }
 
 

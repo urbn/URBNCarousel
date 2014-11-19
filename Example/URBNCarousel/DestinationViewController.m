@@ -33,10 +33,11 @@
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = self.view.frame.size;
-    layout.minimumInteritemSpacing = 10;
+    layout.minimumInteritemSpacing = 0;
+    layout.minimumLineSpacing = 0;
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
-    self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+    self.collectionView = [[URBNScrollSyncCollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast;
     self.collectionView.pagingEnabled = YES;
@@ -77,10 +78,11 @@
     NSAssert(self.selectedCell, @"Cell should be selected for \"from\" transition");
     CGSize size = [UIImageView urbn_aspectFitSizeForImageSize:self.selectedCell.imageView.image.size inRect:self.selectedCell.frame];
 
-    CGFloat originX = CGRectGetMidX(self.view.bounds) - (size.width / 2);
-    CGFloat originY = CGRectGetMidY(self.view.bounds) - (size.height / 2);
+    CGFloat originX = CGRectGetMidX(self.selectedCell.frame) - (size.width / 2);
+    CGFloat originY = CGRectGetMidY(self.selectedCell.frame) - (size.height / 2);
     CGRect frame = CGRectMake(originX, originY, size.width, size.height);
-    return [containerView convertRect:frame fromView:self.collectionView];
+    frame = [containerView convertRect:frame fromView:self.collectionView];
+    return frame;
 }
 
 - (CGRect)toImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView sourceImageFrame:(CGRect)sourceImageFrame
