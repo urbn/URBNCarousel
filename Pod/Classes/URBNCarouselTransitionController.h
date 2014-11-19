@@ -21,8 +21,8 @@ typedef void(^URBNCarouselViewInteractionBeganBlock)(URBNCarouselTransitionContr
 @protocol URBNCarouselTransitioning <NSObject>
 
 @optional
-- (void)willBeginGalleryTransition;
-- (void)didEndGalleryTransition;
+- (void)willBeginGalleryTransitionWithImageView:(UIImageView *)imageView isToVC:(BOOL)isToVC;
+- (void)didEndGalleryTransitionWithImageView:(UIImageView *)imageView  isToVC:(BOOL)isToVC;
 
 // Called inside the animation block of a non-interactive transition.
 - (void)configureAnimatingTransitionImageView:(UIImageView *)imageView;

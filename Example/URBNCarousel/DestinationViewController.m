@@ -50,7 +50,7 @@
 
 
 #pragma mark - GalleryTransitioning
-- (void)willBeginGalleryTransition
+- (void)willBeginGalleryTransitionWithImageView:(UIImageView *)imageView isToVC:(BOOL)isToVC
 {
     if (self.selectedCell) {
         self.selectedCell.hidden = YES;
@@ -59,7 +59,7 @@
     }
 }
 
-- (void)didEndGalleryTransition
+- (void)didEndGalleryTransitionWithImageView:(UIImageView *)imageView isToVC:(BOOL)isToVC
 {
     if (self.selectedCell) {
         self.selectedCell.hidden = NO;

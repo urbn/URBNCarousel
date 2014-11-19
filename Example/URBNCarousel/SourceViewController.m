@@ -47,10 +47,6 @@
         UICollectionViewLayoutAttributes *attr = [__self.inlineLayout layoutAttributesForItemAtIndexPath:indexPath];
         [__self.collectionView setContentOffset:CGPointMake(attr.frame.origin.x - __self.inlineLayout.sectionInset.left, 0) animated:NO];
         __self.selectedCell = (GalleryCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-        
-        if (!__self.selectedCell) {
-            NSLog(@"selected cell is nil");
-        }
     }];
     
     self.transitionController = [[URBNCarouselTransitionController alloc] init];
@@ -69,12 +65,12 @@
 
 
 #pragma mark - GalleryTransitioning
-- (void)willBeginGalleryTransition
+- (void)willBeginGalleryTransitionWithImageView:(UIImageView *)imageView isToVC:(BOOL)isToVC
 {
     self.selectedCell.hidden = YES;
 }
 
-- (void)didEndGalleryTransition
+- (void)didEndGalleryTransitionWithImageView:(UIImageView *)imageView isToVC:(BOOL)isToVC
 {
     self.selectedCell.hidden = NO;
 }

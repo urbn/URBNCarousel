@@ -84,14 +84,6 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     NSAssert([topFromVC conformsToProtocol:@protocol(URBNCarouselTransitioning)], @"GalleryTransitionController -- fromVC doesn't conform to protocol");
     NSAssert([topToVC conformsToProtocol:@protocol(URBNCarouselTransitioning)], @"GalleryTransitionController -- toVC doesn't conform to protocol");
     
-    if ([topFromVC respondsToSelector:@selector(willBeginGalleryTransition)]) {
-        [topFromVC willBeginGalleryTransition];
-    }
-    
-    if ([topToVC respondsToSelector:@selector(willBeginGalleryTransition)]) {
-        [topToVC willBeginGalleryTransition];
-    }
-    
     // Create a view for our animation
     UIImage *image = [topFromVC imageForGalleryTransition];
     CGRect convertedStartingFrame = [topFromVC fromImageFrameForGalleryTransitionWithContainerView:containerView];
@@ -112,6 +104,14 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     [containerView addSubview:toView];
     [containerView addSubview:fromView];
     [containerView addSubview:self.transitionView];
+    
+    if ([topFromVC respondsToSelector:@selector(willBeginGalleryTransitionWithImageView:isToVC:)]) {
+        [topFromVC willBeginGalleryTransitionWithImageView:self.transitionView isToVC:NO];
+    }
+    
+    if ([topToVC respondsToSelector:@selector(willBeginGalleryTransitionWithImageView:isToVC:)]) {
+        [topToVC willBeginGalleryTransitionWithImageView:self.transitionView isToVC:YES];
+    }
 }
 
 - (void)restoreTransitionViewToState:(URBNCarouselTransitionState)state withContext:(id <UIViewControllerContextTransitioning>)transitionContext
@@ -171,20 +171,20 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     UIViewController<URBNCarouselTransitioning> *topFromVC = [self trueContextViewControllerFromContext:transitionContext withKey:UITransitionContextFromViewControllerKey];
     UIViewController<URBNCarouselTransitioning> *topToVC = [self trueContextViewControllerFromContext:transitionContext withKey:UITransitionContextToViewControllerKey];
     
+    if ([topFromVC respondsToSelector:@selector(didEndGalleryTransitionWithImageView:isToVC:)]) {
+        [topFromVC didEndGalleryTransitionWithImageView:self.transitionView isToVC:NO];
+    }
+    
+    if ([topToVC respondsToSelector:@selector(didEndGalleryTransitionWithImageView:isToVC:)]) {
+        [topToVC didEndGalleryTransitionWithImageView:self.transitionView isToVC:YES];
+    }
+    
     [self.transitionView removeFromSuperview];
     self.transitionView = nil;
     self.startScale = -1;
     
     fromView.alpha = 1.0;
     toView.alpha = 1.0;
-    
-    if ([topFromVC respondsToSelector:@selector(didEndGalleryTransition)]) {
-        [topFromVC didEndGalleryTransition];
-    }
-    
-    if ([topToVC respondsToSelector:@selector(didEndGalleryTransition)]) {
-        [topToVC didEndGalleryTransition];
-    }
     
     fromVC.view = fromView;
     toVC.view = toView;
