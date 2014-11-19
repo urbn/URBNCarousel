@@ -58,7 +58,7 @@
 - (void)presentGalleryController
 {
     DestinationViewController *vc = [[DestinationViewController alloc] initWithTransitionController:self.transitionController];
-    vc.transitioningDelegate = self;
+    vc.transitioningDelegate = self.transitionController;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -93,28 +93,6 @@
     CGFloat originY = CGRectGetMidY(convertedRect) - (size.height / 2);
     CGRect imageFrame = CGRectMake(originX, originY, size.width, size.height);
     return imageFrame;
-}
-
-
-#pragma mark - UIViewControllerTransitioningDelegate
-- (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
-{
-    return self.transitionController;
-}
-
-- (id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
-{
-    return self.transitionController;
-}
-
-- (id <UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id <UIViewControllerAnimatedTransitioning>)animator
-{
-    return (self.transitionController.interactive) ? self.transitionController : nil;
-}
-
-- (id <UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id <UIViewControllerAnimatedTransitioning>)animator
-{
-    return (self.transitionController.interactive) ? self.transitionController : nil;
 }
 
 

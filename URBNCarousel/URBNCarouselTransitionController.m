@@ -7,7 +7,6 @@
 //
 
 #import "URBNCarouselTransitionController.h"
-#import "URBNCarouselTransitionView.h"
 #import "UIImageView+ImageFrame.h"
 
 typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
@@ -17,6 +16,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 
 @interface URBNCarouselTransitionController()
 
+@property(nonatomic, readwrite) BOOL interactive;
 @property(nonatomic, strong) NSMapTable *viewInteractionBlocks;
 @property(nonatomic, strong) id <UIViewControllerContextTransitioning> context;
 @property(nonatomic, strong) UIImageView *transitionView;
@@ -34,6 +34,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 @implementation URBNCarouselTransitionController
 
 
+#pragma mark - Lifecycle
 - (id)init
 {
     self = [super init];
@@ -48,7 +49,26 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     return self;
 }
 
+
 #pragma mark - Convenience
+- (UIViewController<URBNCarouselTransitioning> *)trueContextViewControllerFromContext:(id <UIViewControllerContextTransitioning>)transitionContext withKey:(NSString *)key
+{
+    UIViewController<URBNCarouselTransitioning> *vc = (UIViewController<URBNCarouselTransitioning> *)[transitionContext viewControllerForKey:key];
+    if ([vc isKindOfClass:[UINavigationController class]]) {
+        vc = (UIViewController<URBNCarouselTransitioning> *)[((UINavigationController *)vc) topViewController];
+    }
+    return vc;
+}
+
+- (CGFloat)transitionViewPercentScaledForStartScale:(CGFloat)startScale
+{
+    CGSize scale = [self scaleForTransform:self.transitionView.transform];
+    CGFloat percent = ((scale.width - self.startScale) / (1 - self.startScale));
+    return percent;
+}
+
+
+#pragma mark - Transition Setup/Teardown
 - (void)prepareForTransitionWithContext:(id <UIViewControllerContextTransitioning>)transitionContext
 {
     UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
@@ -56,7 +76,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     UIView *fromView = fromVC.view;
     UIView *toView = toVC.view;
     UIView *containerView = [transitionContext containerView];
-
+    
     UIViewController<URBNCarouselTransitioning> *topFromVC = [self trueContextViewControllerFromContext:transitionContext withKey:UITransitionContextFromViewControllerKey];
     UIViewController<URBNCarouselTransitioning> *topToVC = [self trueContextViewControllerFromContext:transitionContext withKey:UITransitionContextToViewControllerKey];
     
@@ -100,7 +120,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     
     UIViewController<URBNCarouselTransitioning> *topFromVC = [self trueContextViewControllerFromContext:transitionContext withKey:UITransitionContextFromViewControllerKey];
     UIViewController<URBNCarouselTransitioning> *topToVC = [self trueContextViewControllerFromContext:transitionContext withKey:UITransitionContextToViewControllerKey];
-
+    
     CGRect convertedStartingFrame = [topFromVC fromImageFrameForGalleryTransitionWithContainerView:containerView];
     CGRect convertedEndingFrame = [topToVC toImageFrameForGalleryTransitionWithContainerView:containerView sourceImageFrame:convertedStartingFrame];
     
@@ -118,7 +138,27 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     
     self.transitionView.center = center;
     self.transitionView.transform = t;
+}
 
+- (void)finishInteractiveTransition:(BOOL)cancelled withVelocity:(CGFloat)velocity
+{
+    UIView *toView = [self.context viewForKey:UITransitionContextToViewKey];
+    UIView *fromView = [self.context viewForKey:UITransitionContextFromViewKey];
+    
+    [UIView animateWithDuration:self.springCompletionSpeed delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:velocity options:0 animations:^{
+        URBNCarouselTransitionState state = cancelled ? URBNCarouselTransitionStateStart : URBNCarouselTransitionStateEnd;
+        [self restoreTransitionViewToState:state withContext:self.context];
+        
+    } completion:^(BOOL finished) {
+        [self finishTransitionWithContext:self.context];
+        [self.context cancelInteractiveTransition];
+        [self.context completeTransition:!cancelled];
+    }];
+    
+    [UIView animateWithDuration:self.completionSpeed animations:^{
+        toView.alpha = cancelled ? 0.0 : 1.0;
+        fromView.alpha = cancelled ? 1.0 : 0.0;
+    } completion:nil];
 }
 
 - (void)finishTransitionWithContext:(id <UIViewControllerContextTransitioning>)transitionContext
@@ -130,7 +170,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     
     UIViewController<URBNCarouselTransitioning> *topFromVC = [self trueContextViewControllerFromContext:transitionContext withKey:UITransitionContextFromViewControllerKey];
     UIViewController<URBNCarouselTransitioning> *topToVC = [self trueContextViewControllerFromContext:transitionContext withKey:UITransitionContextToViewControllerKey];
-
+    
     [self.transitionView removeFromSuperview];
     self.transitionView = nil;
     self.startScale = -1;
@@ -151,21 +191,6 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     self.interactive = NO;
 }
 
-- (UIViewController<URBNCarouselTransitioning> *)trueContextViewControllerFromContext:(id <UIViewControllerContextTransitioning>)transitionContext withKey:(NSString *)key
-{
-    UIViewController<URBNCarouselTransitioning> *vc = (UIViewController<URBNCarouselTransitioning> *)[transitionContext viewControllerForKey:key];
-    if ([vc isKindOfClass:[UINavigationController class]]) {
-        vc = (UIViewController<URBNCarouselTransitioning> *)[((UINavigationController *)vc) topViewController];
-    }
-    return vc;
-}
-
-- (CGFloat)transitionViewPercentScaledForStartScale:(CGFloat)startScale
-{
-    CGSize scale = [self scaleForTransform:self.transitionView.transform];
-    CGFloat percent = ((scale.width - self.startScale) / (1 - self.startScale));
-    return percent;
-}
 
 
 #pragma mark - UIViewControllerAnimatedTransitioning
@@ -215,27 +240,6 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 
     fromView.alpha = (1.0 - percent);
     toView.alpha = percent;
-}
-
-- (void)interactiveTransitionFinished:(BOOL)cancelled withVelocity:(CGFloat)velocity
-{
-    UIView *toView = [self.context viewForKey:UITransitionContextToViewKey];
-    UIView *fromView = [self.context viewForKey:UITransitionContextFromViewKey];
-    
-    [UIView animateWithDuration:self.springCompletionSpeed delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:velocity options:0 animations:^{
-        URBNCarouselTransitionState state = cancelled ? URBNCarouselTransitionStateStart : URBNCarouselTransitionStateEnd;
-        [self restoreTransitionViewToState:state withContext:self.context];
-
-    } completion:^(BOOL finished) {
-        [self finishTransitionWithContext:self.context];
-        [self.context cancelInteractiveTransition];
-        [self.context completeTransition:!cancelled];
-    }];
-    
-    [UIView animateWithDuration:self.completionSpeed animations:^{
-        toView.alpha = cancelled ? 0.0 : 1.0;
-        fromView.alpha = cancelled ? 1.0 : 0.0;
-    } completion:nil];
 }
 
 
@@ -299,7 +303,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
             CGFloat percent = [self transitionViewPercentScaledForStartScale:self.startScale];
 
             BOOL cancelled = (percent < 0.4);
-            [self interactiveTransitionFinished:cancelled withVelocity:pinch.velocity];
+            [self finishInteractiveTransition:cancelled withVelocity:pinch.velocity];
             break;
         }
         case UIGestureRecognizerStatePossible:
@@ -358,6 +362,28 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 {
     return ![otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
 }
+
+#pragma mark - UIViewControllerTransitioningDelegate
+- (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+{
+    return self;
+}
+
+- (id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
+    return self;
+}
+
+- (id <UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id <UIViewControllerAnimatedTransitioning>)animator
+{
+    return (self.interactive) ? self : nil;
+}
+
+- (id <UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id <UIViewControllerAnimatedTransitioning>)animator
+{
+    return (self.interactive) ? self : nil;
+}
+
 
 
 

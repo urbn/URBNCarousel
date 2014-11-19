@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "URBNCarouselTransitionController.h"
 
-@interface SourceViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UIViewControllerTransitioningDelegate, URBNCarouselTransitioning>
+@interface SourceViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, URBNCarouselTransitioning>
 
 @property(nonatomic, strong) UICollectionView *collectionView;
 
