@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "URBNCarouselTransitionController.h"
+#import <URBNCarousel/URBNCarouselTransitionController.h>
 
 @interface SourceViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, URBNCarouselTransitioning>
 

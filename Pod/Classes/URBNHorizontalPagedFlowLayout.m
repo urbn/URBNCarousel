@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Urban Outfitters. All rights reserved.
 //
 
-#import "ANTGuidedScrollFlowLayout.h"
+#import "URBNHorizontalPagedFlowLayout.h"
 
-@interface ANTGuidedScrollFlowLayout ()
+@interface URBNHorizontalPagedFlowLayout ()
 
 @end
 
-@implementation ANTGuidedScrollFlowLayout
+@implementation URBNHorizontalPagedFlowLayout
 
 // Modified from: http://stackoverflow.com/questions/13492037/targetcontentoffsetforproposedcontentoffsetwithscrollingvelocity-without-subcla
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity

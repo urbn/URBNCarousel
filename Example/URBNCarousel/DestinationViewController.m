@@ -6,9 +6,10 @@
 //  Copyright (c) 2014 Demetri Miller. All rights reserved.
 //
 
+#import <URBNCarousel/URBNCarousel.h>
 #import "GalleryCollectionViewCell.h"
 #import "DestinationViewController.h"
-#import "UIImageView+ImageFrame.h"
+
 
 @interface DestinationViewController ()
 @property(nonatomic, strong) URBNCarouselTransitionController *transitionController;
@@ -74,7 +75,7 @@
 - (CGRect)fromImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView
 {
     NSAssert(self.selectedCell, @"Cell should be selected for \"from\" transition");
-    CGSize size = [UIImageView aspectFitSizeForImageSize:self.selectedCell.imageView.image.size inRect:self.selectedCell.frame];
+    CGSize size = [UIImageView urbn_aspectFitSizeForImageSize:self.selectedCell.imageView.image.size inRect:self.selectedCell.frame];
 
     CGFloat originX = CGRectGetMidX(self.view.bounds) - (size.width / 2);
     CGFloat originY = CGRectGetMidY(self.view.bounds) - (size.height / 2);
@@ -84,7 +85,7 @@
 
 - (CGRect)toImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView sourceImageFrame:(CGRect)sourceImageFrame
 {
-    CGSize size = [UIImageView aspectFitSizeForImageSize:sourceImageFrame.size inRect:self.view.bounds];
+    CGSize size = [UIImageView urbn_aspectFitSizeForImageSize:sourceImageFrame.size inRect:self.view.bounds];
     CGFloat originX = CGRectGetMidX(self.view.bounds) - (size.width / 2);
     CGFloat originY = CGRectGetMidY(self.view.bounds) - (size.height / 2);
     CGRect frame = CGRectMake(originX, originY, size.width, size.height);

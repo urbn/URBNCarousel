@@ -7,7 +7,8 @@
 //
 
 #import "URBNCarouselTransitionController.h"
-#import "UIImageView+ImageFrame.h"
+#import "URBNCarouselTransitionView.h"
+#import "UIImageView+URBNImageFrame.h"
 
 typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     URBNCarouselTransitionStateStart,

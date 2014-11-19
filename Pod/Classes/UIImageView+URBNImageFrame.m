@@ -1,8 +1,8 @@
-#import "UIImageView+ImageFrame.h"
+#import "UIImageView+URBNImageFrame.h"
 
-@implementation UIImageView (ImageFrame)
+@implementation UIImageView (URBNImageFrame)
 
-+ (CGSize)aspectFitSizeForImageSize:(CGSize)imageSize inRect:(CGRect)rect
++ (CGSize)urbn_aspectFitSizeForImageSize:(CGSize)imageSize inRect:(CGRect)rect
 {
     CGFloat hfactor = imageSize.width / rect.size.width;
     CGFloat vfactor = imageSize.height / rect.size.height;
@@ -16,7 +16,7 @@
     return CGSizeMake(newWidth, newHeight);
 }
 
-- (CGRect)imageFrame
+- (CGRect)urbn_imageFrame
 {
     CGSize imageSize = self.image.size;
     CGSize frameSize = self.frame.size;
