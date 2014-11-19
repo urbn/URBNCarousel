@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ANTGuidedScrollFlowLayout : UICollectionViewFlowLayout
+@interface URBNHorizontalPagedFlowLayout : UICollectionViewFlowLayout
 
 @end

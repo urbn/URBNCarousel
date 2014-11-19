@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		90B6FE94311BE4A27BBF29B3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC33FE81C9AE9FE58B352355 /* libPods.a */; };
 		A088E2B31A1128DD0060B47D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2B21A1128DD0060B47D /* main.m */; };
 		A088E2B61A1128DD0060B47D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2B51A1128DD0060B47D /* AppDelegate.m */; };
 		A088E2B91A1128DD0060B47D /* SourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2B81A1128DD0060B47D /* SourceViewController.m */; };
@@ -15,24 +16,14 @@
 		A088E2C11A1128DD0060B47D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A088E2BF1A1128DD0060B47D /* LaunchScreen.xib */; };
 		A088E2CD1A1128DD0060B47D /* URBNCarouselTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2CC1A1128DD0060B47D /* URBNCarouselTests.m */; };
 		A088E2DD1A11292F0060B47D /* URBNCarouselTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2DA1A11292F0060B47D /* URBNCarouselTransitionController.m */; };
-		A088E2DE1A11292F0060B47D /* URBNCarouselTransitionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2DC1A11292F0060B47D /* URBNCarouselTransitionView.m */; };
 		A088E2E21A1129420060B47D /* UIImageView+ImageFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2E11A1129420060B47D /* UIImageView+ImageFrame.m */; };
 		A088E2E71A1129560060B47D /* GalleryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2E41A1129560060B47D /* GalleryCollectionViewCell.m */; };
 		A088E2E81A1129560060B47D /* DestinationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2E61A1129560060B47D /* DestinationViewController.m */; };
-		A088E2EB1A1129600060B47D /* ANTGuidedScrollFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2EA1A1129600060B47D /* ANTGuidedScrollFlowLayout.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		A088E2C71A1128DD0060B47D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A088E2A51A1128DD0060B47D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A088E2AC1A1128DD0060B47D;
-			remoteInfo = URBNCarousel;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		3CA8635EF760F49FC07EA630 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		6B559E7727BD1C536598E17C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A088E2AD1A1128DD0060B47D /* URBNCarousel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = URBNCarousel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A088E2B11A1128DD0060B47D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A088E2B21A1128DD0060B47D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -48,16 +39,13 @@
 		A088E2CC1A1128DD0060B47D /* URBNCarouselTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URBNCarouselTests.m; sourceTree = "<group>"; };
 		A088E2D91A11292F0060B47D /* URBNCarouselTransitionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URBNCarouselTransitionController.h; sourceTree = "<group>"; };
 		A088E2DA1A11292F0060B47D /* URBNCarouselTransitionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URBNCarouselTransitionController.m; sourceTree = "<group>"; };
-		A088E2DB1A11292F0060B47D /* URBNCarouselTransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URBNCarouselTransitionView.h; sourceTree = "<group>"; };
-		A088E2DC1A11292F0060B47D /* URBNCarouselTransitionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URBNCarouselTransitionView.m; sourceTree = "<group>"; };
 		A088E2E01A1129420060B47D /* UIImageView+ImageFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+ImageFrame.h"; sourceTree = "<group>"; };
 		A088E2E11A1129420060B47D /* UIImageView+ImageFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+ImageFrame.m"; sourceTree = "<group>"; };
 		A088E2E31A1129560060B47D /* GalleryCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryCollectionViewCell.h; sourceTree = "<group>"; };
 		A088E2E41A1129560060B47D /* GalleryCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryCollectionViewCell.m; sourceTree = "<group>"; };
 		A088E2E51A1129560060B47D /* DestinationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DestinationViewController.h; sourceTree = "<group>"; };
 		A088E2E61A1129560060B47D /* DestinationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DestinationViewController.m; sourceTree = "<group>"; };
-		A088E2E91A1129600060B47D /* ANTGuidedScrollFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANTGuidedScrollFlowLayout.h; sourceTree = "<group>"; };
-		A088E2EA1A1129600060B47D /* ANTGuidedScrollFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANTGuidedScrollFlowLayout.m; sourceTree = "<group>"; };
+		FC33FE81C9AE9FE58B352355 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,25 +53,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A088E2C31A1128DD0060B47D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				90B6FE94311BE4A27BBF29B3 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D4BA46FB5784C30C31F403C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6B559E7727BD1C536598E17C /* Pods.debug.xcconfig */,
+				3CA8635EF760F49FC07EA630 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		A088E2A41A1128DD0060B47D = {
 			isa = PBXGroup;
 			children = (
 				A088E2AF1A1128DD0060B47D /* URBNCarousel */,
-				A088E2C91A1128DD0060B47D /* URBNCarouselTests */,
 				A088E2AE1A1128DD0060B47D /* Products */,
+				0D4BA46FB5784C30C31F403C /* Pods */,
+				E79FE2763A02C75A03CE3E2D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,7 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				A088E2AD1A1128DD0060B47D /* URBNCarousel.app */,
-				A088E2C61A1128DD0060B47D /* URBNCarouselTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -102,7 +93,6 @@
 				A088E2B41A1128DD0060B47D /* AppDelegate.h */,
 				A088E2B51A1128DD0060B47D /* AppDelegate.m */,
 				A088E2EE1A112A200060B47D /* Assets */,
-				A088E2D61A1129120060B47D /* Carousel */,
 				A088E2D71A1129170060B47D /* Demo */,
 				A088E2B01A1128DD0060B47D /* Supporting Files */,
 			);
@@ -142,8 +132,6 @@
 				A088E2E11A1129420060B47D /* UIImageView+ImageFrame.m */,
 				A088E2D91A11292F0060B47D /* URBNCarouselTransitionController.h */,
 				A088E2DA1A11292F0060B47D /* URBNCarouselTransitionController.m */,
-				A088E2DB1A11292F0060B47D /* URBNCarouselTransitionView.h */,
-				A088E2DC1A11292F0060B47D /* URBNCarouselTransitionView.m */,
 			);
 			name = Carousel;
 			sourceTree = "<group>";
@@ -151,8 +139,6 @@
 		A088E2D71A1129170060B47D /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				A088E2E91A1129600060B47D /* ANTGuidedScrollFlowLayout.h */,
-				A088E2EA1A1129600060B47D /* ANTGuidedScrollFlowLayout.m */,
 				A088E2EC1A1129F40060B47D /* Controllers */,
 				A088E2ED1A112A020060B47D /* Views */,
 			);
@@ -189,6 +175,14 @@
 			name = Assets;
 			sourceTree = "<group>";
 		};
+		E79FE2763A02C75A03CE3E2D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FC33FE81C9AE9FE58B352355 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -196,9 +190,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A088E2D01A1128DD0060B47D /* Build configuration list for PBXNativeTarget "URBNCarousel" */;
 			buildPhases = (
+				55B3C912BEA624638798F2BB /* Check Pods Manifest.lock */,
 				A088E2A91A1128DD0060B47D /* Sources */,
 				A088E2AA1A1128DD0060B47D /* Frameworks */,
 				A088E2AB1A1128DD0060B47D /* Resources */,
+				164B35B16D2B34D341BF2EF8 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -208,24 +204,6 @@
 			productName = URBNCarousel;
 			productReference = A088E2AD1A1128DD0060B47D /* URBNCarousel.app */;
 			productType = "com.apple.product-type.application";
-		};
-		A088E2C51A1128DD0060B47D /* URBNCarouselTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A088E2D31A1128DD0060B47D /* Build configuration list for PBXNativeTarget "URBNCarouselTests" */;
-			buildPhases = (
-				A088E2C21A1128DD0060B47D /* Sources */,
-				A088E2C31A1128DD0060B47D /* Frameworks */,
-				A088E2C41A1128DD0060B47D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				A088E2C81A1128DD0060B47D /* PBXTargetDependency */,
-			);
-			name = URBNCarouselTests;
-			productName = URBNCarouselTests;
-			productReference = A088E2C61A1128DD0060B47D /* URBNCarouselTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -238,10 +216,6 @@
 				TargetAttributes = {
 					A088E2AC1A1128DD0060B47D = {
 						CreatedOnToolsVersion = 6.1;
-					};
-					A088E2C51A1128DD0060B47D = {
-						CreatedOnToolsVersion = 6.1;
-						TestTargetID = A088E2AC1A1128DD0060B47D;
 					};
 				};
 			};
@@ -259,7 +233,6 @@
 			projectRoot = "";
 			targets = (
 				A088E2AC1A1128DD0060B47D /* URBNCarousel */,
-				A088E2C51A1128DD0060B47D /* URBNCarouselTests */,
 			);
 		};
 /* End PBXProject section */
@@ -275,14 +248,40 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A088E2C41A1128DD0060B47D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		164B35B16D2B34D341BF2EF8 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
 			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
-/* End PBXResourcesBuildPhase section */
+		55B3C912BEA624638798F2BB /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A088E2A91A1128DD0060B47D /* Sources */ = {
@@ -291,33 +290,13 @@
 			files = (
 				A088E2E71A1129560060B47D /* GalleryCollectionViewCell.m in Sources */,
 				A088E2E81A1129560060B47D /* DestinationViewController.m in Sources */,
-				A088E2E21A1129420060B47D /* UIImageView+ImageFrame.m in Sources */,
-				A088E2EB1A1129600060B47D /* ANTGuidedScrollFlowLayout.m in Sources */,
 				A088E2B91A1128DD0060B47D /* SourceViewController.m in Sources */,
-				A088E2DD1A11292F0060B47D /* URBNCarouselTransitionController.m in Sources */,
 				A088E2B61A1128DD0060B47D /* AppDelegate.m in Sources */,
 				A088E2B31A1128DD0060B47D /* main.m in Sources */,
-				A088E2DE1A11292F0060B47D /* URBNCarouselTransitionView.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A088E2C21A1128DD0060B47D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A088E2CD1A1128DD0060B47D /* URBNCarouselTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		A088E2C81A1128DD0060B47D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A088E2AC1A1128DD0060B47D /* URBNCarousel */;
-			targetProxy = A088E2C71A1128DD0060B47D /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		A088E2BA1A1128DD0060B47D /* Main.storyboard */ = {
@@ -417,6 +396,7 @@
 		};
 		A088E2D11A1128DD0060B47D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6B559E7727BD1C536598E17C /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = URBNCarousel/Info.plist;
@@ -427,45 +407,12 @@
 		};
 		A088E2D21A1128DD0060B47D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CA8635EF760F49FC07EA630 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = URBNCarousel/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		A088E2D41A1128DD0060B47D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = URBNCarouselTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/URBNCarousel.app/URBNCarousel";
-			};
-			name = Debug;
-		};
-		A088E2D51A1128DD0060B47D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = URBNCarouselTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/URBNCarousel.app/URBNCarousel";
 			};
 			name = Release;
 		};
@@ -488,6 +435,7 @@
 				A088E2D21A1128DD0060B47D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A088E2D31A1128DD0060B47D /* Build configuration list for PBXNativeTarget "URBNCarouselTests" */ = {
 			isa = XCConfigurationList;
@@ -496,6 +444,7 @@
 				A088E2D51A1128DD0060B47D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

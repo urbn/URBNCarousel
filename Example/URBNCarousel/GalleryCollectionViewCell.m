@@ -24,9 +24,6 @@
         _imageView.layer.borderWidth = 2.0;
         [self.contentView addSubview:_imageView];
         
-        _pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
-        [self addGestureRecognizer:_pinchGesture];
-
         self.layer.borderColor = [UIColor whiteColor].CGColor;
         self.layer.borderWidth = 2.0;
 
@@ -39,14 +36,6 @@
     [super setFrame:frame];
     self.contentView.frame = self.bounds;
 }
-
-- (void)handlePinch:(UIPinchGestureRecognizer *)pinch
-{
-    if (self.pinchGestureBlock) {
-        self.pinchGestureBlock(self, pinch);
-    }
-}
-
 
 
 @end

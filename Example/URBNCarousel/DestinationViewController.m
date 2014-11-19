@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Demetri Miller. All rights reserved.
 //
 
+#import <URBNCarousel/URBNCarousel.h>
 #import "GalleryCollectionViewCell.h"
 #import "DestinationViewController.h"
 
@@ -32,10 +33,11 @@
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = self.view.frame.size;
-    layout.minimumInteritemSpacing = 10;
+    layout.minimumInteritemSpacing = 0;
+    layout.minimumLineSpacing = 0;
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
-    self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+    self.collectionView = [[URBNScrollSyncCollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast;
     self.collectionView.pagingEnabled = YES;
@@ -71,14 +73,24 @@
     return self.selectedCell.imageView.image;
 }
 
-- (CGRect)imageFrameForGalleryTransitionWithContainerView:(UIView *)containerView
+- (CGRect)fromImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView
 {
-    CGRect frame;
-    if (self.selectedCell) {
-        frame = [containerView convertRect:self.selectedCell.frame fromView:self.collectionView];
-    } else {
-        frame = [containerView convertRect:self.view.bounds fromView:self.view];
-    }
+    NSAssert(self.selectedCell, @"Cell should be selected for \"from\" transition");
+    CGSize size = [UIImageView urbn_aspectFitSizeForImageSize:self.selectedCell.imageView.image.size inRect:self.selectedCell.frame];
+
+    CGFloat originX = CGRectGetMidX(self.selectedCell.frame) - (size.width / 2);
+    CGFloat originY = CGRectGetMidY(self.selectedCell.frame) - (size.height / 2);
+    CGRect frame = CGRectMake(originX, originY, size.width, size.height);
+    frame = [containerView convertRect:frame fromView:self.collectionView];
+    return frame;
+}
+
+- (CGRect)toImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView sourceImageFrame:(CGRect)sourceImageFrame
+{
+    CGSize size = [UIImageView urbn_aspectFitSizeForImageSize:sourceImageFrame.size inRect:self.view.bounds];
+    CGFloat originX = CGRectGetMidX(self.view.bounds) - (size.width / 2);
+    CGFloat originY = CGRectGetMidY(self.view.bounds) - (size.height / 2);
+    CGRect frame = CGRectMake(originX, originY, size.width, size.height);
     return frame;
 }
 
@@ -102,10 +114,10 @@
     cell.imageView.image = [UIImage imageNamed:@"150x350"];
 
     typeof(self) __weak __self = self;
-//    [self.transitionController registerInteractiveGesturesWithView:cell interactionBeganBlock:^(GalleryTransitionController *controller, UIView *view) {
-//        __self.selectedCell = (GalleryCollectionViewCell *)cell;
-//        [__self dismissViewControllerAnimated:YES completion:nil];
-//    }];
+    [self.transitionController registerInteractiveGesturesWithView:cell interactionBeganBlock:^(URBNCarouselTransitionController *controller, UIView *view) {
+        __self.selectedCell = (GalleryCollectionViewCell *)cell;
+        [__self dismissViewControllerAnimated:YES completion:nil];
+    }];
     
     return cell;
 }
