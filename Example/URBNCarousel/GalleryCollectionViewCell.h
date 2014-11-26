@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GalleryCollectionViewCell : UICollectionViewCell
+@interface GalleryCollectionViewCell : UICollectionViewCell <UIScrollViewDelegate>
 
+@property(nonatomic, strong) UIScrollView *scrollView;
 @property(nonatomic, strong) UIImageView *imageView;
 
 @end

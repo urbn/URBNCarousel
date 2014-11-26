@@ -10,7 +10,7 @@
 #import <URBNCarousel/URBNCarousel.h>
 
 
-@interface DestinationViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, URBNCarouselTransitioning>
+@interface DestinationViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, URBNCarouselInteractiveDelegate, URBNCarouselTransitioning>
 
 @property(nonatomic, strong) URBNScrollSyncCollectionView *collectionView;
 

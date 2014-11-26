@@ -13,19 +13,38 @@
 
 typedef void(^URBNCarouselViewInteractionBeganBlock)(URBNCarouselTransitionController *controller, UIView *view);
 
+typedef NS_ENUM(NSUInteger, URBNCarouselTransitionInteractiveDirection) {
+    URBNCarouselTransitionInteractiveDirectionScaleUp,
+    URBNCarouselTransitionInteractiveDirectionScaleDown,
+};
+
+
+/**
+     Delegate protocol that should be implemented by any view controller wishing to provide more
+     granular control over transition logic.
+ */
+
+@protocol URBNCarouselInteractiveDelegate <NSObject>
+@optional
+- (BOOL)shouldBeginInteractiveTransitionWithView:(UIView *)view direction:(URBNCarouselTransitionInteractiveDirection)direction;
+@end
+
+
 
 /** 
-    Delegate protocol that should be implemented by any view controller wishing to use
+    Protocol that should be implemented by any view controller wishing to use
     the URBNCarouselTransitionController. 
 */
 @protocol URBNCarouselTransitioning <NSObject>
 
 @optional
+- (BOOL)shouldBeginInteractiveTransitionWithDirection:(URBNCarouselTransitionInteractiveDirection)direction;
 - (void)willBeginGalleryTransitionWithImageView:(UIImageView *)imageView isToVC:(BOOL)isToVC;
 - (void)didEndGalleryTransitionWithImageView:(UIImageView *)imageView  isToVC:(BOOL)isToVC;
 
 // Called inside the animation block of a non-interactive transition.
 - (void)configureAnimatingTransitionImageView:(UIImageView *)imageView;
+
 
 @required
 // Return the image to transition
@@ -50,7 +69,7 @@ typedef void(^URBNCarouselViewInteractionBeganBlock)(URBNCarouselTransitionContr
 @interface URBNCarouselTransitionController : NSObject <UIGestureRecognizerDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerInteractiveTransitioning, UIViewControllerTransitioningDelegate>
 
 @property(nonatomic, readonly) BOOL interactive;  // Defaults to NO
-@property(nonatomic, weak) id<URBNCarouselTransitioning> interactionDelegate;
+@property(nonatomic, weak) id<URBNCarouselInteractiveDelegate> interactiveDelegate;
 
 - (void)registerInteractiveGesturesWithView:(UIView *)view interactionBeganBlock:(URBNCarouselViewInteractionBeganBlock)interactionBeganBlock;
 

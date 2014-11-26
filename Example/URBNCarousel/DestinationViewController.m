@@ -23,6 +23,7 @@
     self = [super init];
     if (self) {
         self.transitionController = controller;
+        self.transitionController.interactiveDelegate = self;
     }
     return self;
 }
@@ -46,10 +47,34 @@
     [self.collectionView registerClass:[GalleryCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
+    
+    UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    closeButton.frame = CGRectMake(self.view.frame.size.width - 70, 20, 50, 30);
+    [closeButton setTitle:@"close" forState:UIControlStateNormal];
+    [closeButton addTarget:self action:@selector(closeButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:closeButton];
+}
+
+- (void)closeButtonTapped
+{
+    self.selectedCell = [self.collectionView cellForItemAtIndexPath:[self.collectionView indexPathsForVisibleItems][0]];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
-#pragma mark - GalleryTransitioning
+#pragma mark - URBNCarouselInteractiveDelegate
+- (BOOL)shouldBeginInteractiveTransitionWithView:(UIView *)view direction:(URBNCarouselTransitionInteractiveDirection)direction
+{
+    GalleryCollectionViewCell *cell = (GalleryCollectionViewCell *)view;
+    if (cell.scrollView.zoomScale <= 1 && direction == URBNCarouselTransitionInteractiveDirectionScaleDown) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+
+#pragma mark - URBNCarouselTransitioning
 - (void)willBeginGalleryTransitionWithImageView:(UIImageView *)imageView isToVC:(BOOL)isToVC
 {
     if (self.selectedCell) {
@@ -95,13 +120,6 @@
 }
 
 
-#pragma mark - UICollectionViewDelegate
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    self.selectedCell = (GalleryCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -112,7 +130,8 @@
 {
     GalleryCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     cell.imageView.image = [UIImage imageNamed:@"150x350"];
-
+    cell.scrollView.userInteractionEnabled = YES;
+    
     typeof(self) __weak __self = self;
     [self.transitionController registerInteractiveGesturesWithView:cell interactionBeganBlock:^(URBNCarouselTransitionController *controller, UIView *view) {
         __self.selectedCell = (GalleryCollectionViewCell *)cell;

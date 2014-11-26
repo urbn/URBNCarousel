@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 
 @property(nonatomic, readwrite) BOOL interactive;
 @property(nonatomic, strong) NSMapTable *viewInteractionBlocks;
+@property(nonatomic, strong) NSMapTable *viewPinchTransitionGestureRecognizers;
 @property(nonatomic, strong) id <UIViewControllerContextTransitioning> context;
 @property(nonatomic, strong) UIImageView *transitionView;
 
@@ -25,7 +26,6 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 @property(nonatomic, assign) CGFloat startScale;
 @property(nonatomic, assign) CGFloat springCompletionSpeed;
 @property(nonatomic, assign) CGFloat completionSpeed;
-
 
 @end
 
@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     self = [super init];
     if (self) {
         self.viewInteractionBlocks = [[NSMapTable alloc] initWithKeyOptions:NSPointerFunctionsWeakMemory valueOptions:NSPointerFunctionsCopyIn capacity:10];
+        self.viewPinchTransitionGestureRecognizers = [[NSMapTable alloc] initWithKeyOptions:NSPointerFunctionsWeakMemory valueOptions:NSPointerFunctionsStrongMemory capacity:10];
         
         self.startScale = -1;
         self.springCompletionSpeed = 0.6;
@@ -265,6 +266,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     [view addGestureRecognizer:rotate];
     
     [self.viewInteractionBlocks setObject:interactionBeganBlock forKey:view];
+    [self.viewPinchTransitionGestureRecognizers setObject:pinch forKey:view];
 }
 
 - (CGSize)scaleForTransform:(CGAffineTransform)t
@@ -340,27 +342,30 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 #pragma mark - UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    UIPinchGestureRecognizer *pinch;
-    for (UIGestureRecognizer *g in gestureRecognizer.view.gestureRecognizers) {
-        if ([g isKindOfClass:[UIPinchGestureRecognizer class]]) {
-            pinch = (UIPinchGestureRecognizer *)g;
-            break;
-        }
+    UIPinchGestureRecognizer *pinch = [self.viewPinchTransitionGestureRecognizers objectForKey:gestureRecognizer.view];
+    BOOL pinchStarted = (pinch.state != UIGestureRecognizerStatePossible);
+    BOOL isPinch = (gestureRecognizer == pinch);
+
+    BOOL shouldBeginTransition = YES;
+    if (isPinch && !pinchStarted && self.interactiveDelegate && [self.interactiveDelegate respondsToSelector:@selector(shouldBeginInteractiveTransitionWithView:direction:)]) {
+        CGFloat scale = pinch.scale;
+        NSAssert(scale != 1, @"Scale shouldn't be equal to one for the current logic to work");
+        URBNCarouselTransitionInteractiveDirection direction = (scale > 1) ? URBNCarouselTransitionInteractiveDirectionScaleUp : URBNCarouselTransitionInteractiveDirectionScaleDown;
+        shouldBeginTransition = [self.interactiveDelegate shouldBeginInteractiveTransitionWithView:gestureRecognizer.view direction:direction];
     }
     
-    BOOL pinchStarted = (pinch.state != UIGestureRecognizerStatePossible || (gestureRecognizer == pinch));
-
-    if (pinchStarted) {
+    if (isPinch && !pinchStarted && shouldBeginTransition) {
         self.interactive = YES;
     }
 
-    return pinchStarted;
+    BOOL shouldBegin = (shouldBeginTransition || (!isPinch && pinchStarted));
+    return shouldBegin;
 }
 
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    return ![otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+    return YES;
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
