@@ -143,8 +143,10 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 
 - (void)finishInteractiveTransition:(BOOL)cancelled withVelocity:(CGFloat)velocity
 {
-    UIView *toView = [self.context viewForKey:UITransitionContextToViewKey];
-    UIView *fromView = [self.context viewForKey:UITransitionContextFromViewKey];
+    UIViewController *fromVC = [self.context viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *toVC = [self.context viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIView *fromView = fromVC.view;
+    UIView *toView = toVC.view;
     
     [UIView animateWithDuration:self.springCompletionSpeed delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:velocity options:0 animations:^{
         URBNCarouselTransitionState state = cancelled ? URBNCarouselTransitionStateStart : URBNCarouselTransitionStateEnd;
@@ -166,8 +168,8 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 {
     UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    UIView *toView = [transitionContext viewForKey:UITransitionContextToViewKey];
-    UIView *fromView = [transitionContext viewForKey:UITransitionContextFromViewKey];
+    UIView *fromView = fromVC.view;
+    UIView *toView = toVC.view;
     
     UIViewController<URBNCarouselTransitioning> *topFromVC = [self trueContextViewControllerFromContext:transitionContext withKey:UITransitionContextFromViewControllerKey];
     UIViewController<URBNCarouselTransitioning> *topToVC = [self trueContextViewControllerFromContext:transitionContext withKey:UITransitionContextToViewControllerKey];
@@ -202,8 +204,10 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext
 {
-    UIView *fromView = [transitionContext viewForKey:UITransitionContextFromViewKey];
-    UIView *toView = [transitionContext viewForKey:UITransitionContextToViewKey];
+    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIView *fromView = fromVC.view;
+    UIView *toView = toVC.view;
     UIViewController<URBNCarouselTransitioning> *topToVC = [self trueContextViewControllerFromContext:transitionContext withKey:UITransitionContextToViewControllerKey];
 
     [self prepareForTransitionWithContext:transitionContext];
@@ -236,8 +240,10 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 - (void)updateWithPercent:(CGFloat)percent
 {
     [self.context updateInteractiveTransition:percent];
-    UIView *fromView = [self.context viewForKey:UITransitionContextFromViewKey];
-    UIView *toView = [self.context viewForKey:UITransitionContextToViewKey];
+    UIViewController *fromVC = [self.context viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *toVC = [self.context viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIView *fromView = fromVC.view;
+    UIView *toView = toVC.view;
 
     fromView.alpha = (1.0 - percent);
     toView.alpha = percent;
