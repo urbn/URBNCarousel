@@ -7,7 +7,7 @@
 //
 
 #import <URBNCarousel/URBNCarousel.h>
-#import "GalleryCollectionViewCell.h"
+#import "URBNCarouselZoomableCell.h"
 #import "DestinationViewController.h"
 #import "SourceViewController.h"
 
@@ -16,7 +16,7 @@
 @property(nonatomic, strong) URBNHorizontalPagedFlowLayout *inlineLayout;
 @property(nonatomic, strong) URBNCarouselTransitionController *transitionController;
 @property(nonatomic, assign) CGFloat startScale;
-@property(nonatomic, weak) GalleryCollectionViewCell *selectedCell;
+@property(nonatomic, weak) URBNCarouselZoomableCell *selectedCell;
 
 
 @end
@@ -40,13 +40,13 @@
     
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
-    [self.collectionView registerClass:[GalleryCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [self.collectionView registerClass:[URBNCarouselZoomableCell class] forCellWithReuseIdentifier:@"cell"];
     
     typeof(self) __weak __self = self;
     [self.collectionView setDidSyncBlock:^(UICollectionView *collectionView, NSIndexPath *indexPath) {
         UICollectionViewLayoutAttributes *attr = [__self.inlineLayout layoutAttributesForItemAtIndexPath:indexPath];
         [__self.collectionView setContentOffset:CGPointMake(attr.frame.origin.x - __self.inlineLayout.sectionInset.left, 0) animated:NO];
-        __self.selectedCell = (GalleryCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+        __self.selectedCell = (URBNCarouselZoomableCell *)[collectionView cellForItemAtIndexPath:indexPath];
     }];
     
     self.transitionController = [[URBNCarouselTransitionController alloc] init];
@@ -58,6 +58,7 @@
 {
     DestinationViewController *vc = [[DestinationViewController alloc] initWithTransitionController:self.transitionController];
     vc.transitioningDelegate = self.transitionController;
+    
     [self presentViewController:vc animated:YES completion:^{
         [self.collectionView registerForSynchronizationWithCollectionView:vc.collectionView];
     }];
@@ -100,7 +101,7 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectedCell = (GalleryCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    self.selectedCell = (URBNCarouselZoomableCell *)[collectionView cellForItemAtIndexPath:indexPath];
     [self presentGalleryController];
 }
 
@@ -113,12 +114,12 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    GalleryCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    URBNCarouselZoomableCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     cell.imageView.image = [UIImage imageNamed:@"150x350"];
     
     typeof(self) __weak __self = self;
     [self.transitionController registerInteractiveGesturesWithView:cell interactionBeganBlock:^(URBNCarouselTransitionController *controller, UIView *view) {
-        __self.selectedCell = (GalleryCollectionViewCell *)cell;
+        __self.selectedCell = (URBNCarouselZoomableCell *)cell;
         [__self presentGalleryController];
     }];
     

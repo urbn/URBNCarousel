@@ -7,13 +7,13 @@
 //
 
 #import <URBNCarousel/URBNCarousel.h>
-#import "GalleryCollectionViewCell.h"
+#import "URBNCarouselZoomableCell.h"
 #import "DestinationViewController.h"
 
 
 @interface DestinationViewController ()
 @property(nonatomic, strong) URBNCarouselTransitionController *transitionController;
-@property(nonatomic, weak) GalleryCollectionViewCell *selectedCell;
+@property(nonatomic, weak) URBNCarouselZoomableCell *selectedCell;
 @end
 
 @implementation DestinationViewController
@@ -44,7 +44,7 @@
     self.collectionView.pagingEnabled = YES;
     [self.view addSubview:self.collectionView];
     
-    [self.collectionView registerClass:[GalleryCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [self.collectionView registerClass:[URBNCarouselZoomableCell class] forCellWithReuseIdentifier:@"cell"];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     
@@ -55,9 +55,13 @@
     [self.view addSubview:closeButton];
 }
 
+- (void)dealloc {
+    NSLog( @"%p: %s (%d)",self, __PRETTY_FUNCTION__, __LINE__);
+}
+
 - (void)closeButtonTapped
 {
-    self.selectedCell = [self.collectionView cellForItemAtIndexPath:[self.collectionView indexPathsForVisibleItems][0]];
+    self.selectedCell = (URBNCarouselZoomableCell *)[self.collectionView cellForItemAtIndexPath:[self.collectionView indexPathsForVisibleItems][0]];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -65,7 +69,7 @@
 #pragma mark - URBNCarouselInteractiveDelegate
 - (BOOL)shouldBeginInteractiveTransitionWithView:(UIView *)view direction:(URBNCarouselTransitionInteractiveDirection)direction
 {
-    GalleryCollectionViewCell *cell = (GalleryCollectionViewCell *)view;
+    URBNCarouselZoomableCell *cell = (URBNCarouselZoomableCell *)view;
     if (cell.scrollView.zoomScale <= 1 && direction == URBNCarouselTransitionInteractiveDirectionScaleDown) {
         return YES;
     } else {
@@ -128,13 +132,13 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    GalleryCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    URBNCarouselZoomableCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     cell.imageView.image = [UIImage imageNamed:@"150x350"];
     cell.scrollView.userInteractionEnabled = YES;
     
     typeof(self) __weak __self = self;
     [self.transitionController registerInteractiveGesturesWithView:cell interactionBeganBlock:^(URBNCarouselTransitionController *controller, UIView *view) {
-        __self.selectedCell = (GalleryCollectionViewCell *)cell;
+        __self.selectedCell = (URBNCarouselZoomableCell *)cell;
         [__self dismissViewControllerAnimated:YES completion:nil];
     }];
     

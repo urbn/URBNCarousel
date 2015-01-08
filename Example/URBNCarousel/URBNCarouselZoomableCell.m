@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Demetri Miller. All rights reserved.
 //
 
-#import "GalleryCollectionViewCell.h"
+#import "URBNCarouselZoomableCell.h"
 
-@implementation GalleryCollectionViewCell
+@implementation URBNCarouselZoomableCell
 
 
 #pragma mark - Lifecycle

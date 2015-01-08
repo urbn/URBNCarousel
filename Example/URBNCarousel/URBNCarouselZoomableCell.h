@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GalleryCollectionViewCell : UICollectionViewCell <UIScrollViewDelegate>
+@interface URBNCarouselZoomableCell : UICollectionViewCell <UIScrollViewDelegate>
 
 @property(nonatomic, strong) UIScrollView *scrollView;
 @property(nonatomic, strong) UIImageView *imageView;

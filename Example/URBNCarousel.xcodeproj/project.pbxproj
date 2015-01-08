@@ -14,10 +14,7 @@
 		A088E2BC1A1128DD0060B47D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A088E2BA1A1128DD0060B47D /* Main.storyboard */; };
 		A088E2BE1A1128DD0060B47D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A088E2BD1A1128DD0060B47D /* Images.xcassets */; };
 		A088E2C11A1128DD0060B47D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A088E2BF1A1128DD0060B47D /* LaunchScreen.xib */; };
-		A088E2CD1A1128DD0060B47D /* URBNCarouselTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2CC1A1128DD0060B47D /* URBNCarouselTests.m */; };
-		A088E2DD1A11292F0060B47D /* URBNCarouselTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2DA1A11292F0060B47D /* URBNCarouselTransitionController.m */; };
-		A088E2E21A1129420060B47D /* UIImageView+ImageFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2E11A1129420060B47D /* UIImageView+ImageFrame.m */; };
-		A088E2E71A1129560060B47D /* GalleryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2E41A1129560060B47D /* GalleryCollectionViewCell.m */; };
+		A088E2E71A1129560060B47D /* URBNCarouselZoomableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2E41A1129560060B47D /* URBNCarouselZoomableCell.m */; };
 		A088E2E81A1129560060B47D /* DestinationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2E61A1129560060B47D /* DestinationViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -34,15 +31,8 @@
 		A088E2BB1A1128DD0060B47D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A088E2BD1A1128DD0060B47D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A088E2C01A1128DD0060B47D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		A088E2C61A1128DD0060B47D /* URBNCarouselTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = URBNCarouselTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A088E2CB1A1128DD0060B47D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A088E2CC1A1128DD0060B47D /* URBNCarouselTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URBNCarouselTests.m; sourceTree = "<group>"; };
-		A088E2D91A11292F0060B47D /* URBNCarouselTransitionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URBNCarouselTransitionController.h; sourceTree = "<group>"; };
-		A088E2DA1A11292F0060B47D /* URBNCarouselTransitionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URBNCarouselTransitionController.m; sourceTree = "<group>"; };
-		A088E2E01A1129420060B47D /* UIImageView+ImageFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+ImageFrame.h"; sourceTree = "<group>"; };
-		A088E2E11A1129420060B47D /* UIImageView+ImageFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+ImageFrame.m"; sourceTree = "<group>"; };
-		A088E2E31A1129560060B47D /* GalleryCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryCollectionViewCell.h; sourceTree = "<group>"; };
-		A088E2E41A1129560060B47D /* GalleryCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryCollectionViewCell.m; sourceTree = "<group>"; };
+		A088E2E31A1129560060B47D /* URBNCarouselZoomableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URBNCarouselZoomableCell.h; sourceTree = "<group>"; };
+		A088E2E41A1129560060B47D /* URBNCarouselZoomableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URBNCarouselZoomableCell.m; sourceTree = "<group>"; };
 		A088E2E51A1129560060B47D /* DestinationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DestinationViewController.h; sourceTree = "<group>"; };
 		A088E2E61A1129560060B47D /* DestinationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DestinationViewController.m; sourceTree = "<group>"; };
 		FC33FE81C9AE9FE58B352355 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,34 +98,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		A088E2C91A1128DD0060B47D /* URBNCarouselTests */ = {
-			isa = PBXGroup;
-			children = (
-				A088E2CC1A1128DD0060B47D /* URBNCarouselTests.m */,
-				A088E2CA1A1128DD0060B47D /* Supporting Files */,
-			);
-			path = URBNCarouselTests;
-			sourceTree = "<group>";
-		};
-		A088E2CA1A1128DD0060B47D /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				A088E2CB1A1128DD0060B47D /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		A088E2D61A1129120060B47D /* Carousel */ = {
-			isa = PBXGroup;
-			children = (
-				A088E2E01A1129420060B47D /* UIImageView+ImageFrame.h */,
-				A088E2E11A1129420060B47D /* UIImageView+ImageFrame.m */,
-				A088E2D91A11292F0060B47D /* URBNCarouselTransitionController.h */,
-				A088E2DA1A11292F0060B47D /* URBNCarouselTransitionController.m */,
-			);
-			name = Carousel;
-			sourceTree = "<group>";
-		};
 		A088E2D71A1129170060B47D /* Demo */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,8 +121,8 @@
 		A088E2ED1A112A020060B47D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A088E2E31A1129560060B47D /* GalleryCollectionViewCell.h */,
-				A088E2E41A1129560060B47D /* GalleryCollectionViewCell.m */,
+				A088E2E31A1129560060B47D /* URBNCarouselZoomableCell.h */,
+				A088E2E41A1129560060B47D /* URBNCarouselZoomableCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -288,7 +250,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A088E2E71A1129560060B47D /* GalleryCollectionViewCell.m in Sources */,
+				A088E2E71A1129560060B47D /* URBNCarouselZoomableCell.m in Sources */,
 				A088E2E81A1129560060B47D /* DestinationViewController.m in Sources */,
 				A088E2B91A1128DD0060B47D /* SourceViewController.m in Sources */,
 				A088E2B61A1128DD0060B47D /* AppDelegate.m in Sources */,
@@ -433,15 +395,6 @@
 			buildConfigurations = (
 				A088E2D11A1128DD0060B47D /* Debug */,
 				A088E2D21A1128DD0060B47D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A088E2D31A1128DD0060B47D /* Build configuration list for PBXNativeTarget "URBNCarouselTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A088E2D41A1128DD0060B47D /* Debug */,
-				A088E2D51A1128DD0060B47D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
