@@ -19,7 +19,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 @property(nonatomic, readwrite) BOOL interactive;
 @property(nonatomic, strong) NSMapTable *viewInteractionBlocks;
 @property(nonatomic, strong) NSMapTable *viewPinchTransitionGestureRecognizers;
-@property(nonatomic, strong) id <UIViewControllerContextTransitioning> context;
+@property(nonatomic, weak) id <UIViewControllerContextTransitioning> context;
 @property(nonatomic, strong) UIImageView *transitionView;
 
 @property(nonatomic, assign) CGRect originalSelectedCellFrame;
