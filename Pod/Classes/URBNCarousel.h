@@ -11,6 +11,7 @@
 
 #import "UIImageView+URBNImageFrame.h"
 #import "URBNCarouselTransitionController.h"
+#import "URBNCarouselZoomableCell.h"
 #import "URBNHorizontalPagedFlowLayout.h"
 #import "URBNScrollSyncCollectionView.h"
 
