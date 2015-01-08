@@ -14,7 +14,6 @@
 		A088E2BC1A1128DD0060B47D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A088E2BA1A1128DD0060B47D /* Main.storyboard */; };
 		A088E2BE1A1128DD0060B47D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A088E2BD1A1128DD0060B47D /* Images.xcassets */; };
 		A088E2C11A1128DD0060B47D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A088E2BF1A1128DD0060B47D /* LaunchScreen.xib */; };
-		A088E2E71A1129560060B47D /* URBNCarouselZoomableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2E41A1129560060B47D /* URBNCarouselZoomableCell.m */; };
 		A088E2E81A1129560060B47D /* DestinationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A088E2E61A1129560060B47D /* DestinationViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -31,8 +30,6 @@
 		A088E2BB1A1128DD0060B47D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A088E2BD1A1128DD0060B47D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A088E2C01A1128DD0060B47D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		A088E2E31A1129560060B47D /* URBNCarouselZoomableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URBNCarouselZoomableCell.h; sourceTree = "<group>"; };
-		A088E2E41A1129560060B47D /* URBNCarouselZoomableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URBNCarouselZoomableCell.m; sourceTree = "<group>"; };
 		A088E2E51A1129560060B47D /* DestinationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DestinationViewController.h; sourceTree = "<group>"; };
 		A088E2E61A1129560060B47D /* DestinationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DestinationViewController.m; sourceTree = "<group>"; };
 		FC33FE81C9AE9FE58B352355 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,7 +99,6 @@
 			isa = PBXGroup;
 			children = (
 				A088E2EC1A1129F40060B47D /* Controllers */,
-				A088E2ED1A112A020060B47D /* Views */,
 			);
 			name = Demo;
 			sourceTree = "<group>";
@@ -116,15 +112,6 @@
 				A088E2B81A1128DD0060B47D /* SourceViewController.m */,
 			);
 			name = Controllers;
-			sourceTree = "<group>";
-		};
-		A088E2ED1A112A020060B47D /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				A088E2E31A1129560060B47D /* URBNCarouselZoomableCell.h */,
-				A088E2E41A1129560060B47D /* URBNCarouselZoomableCell.m */,
-			);
-			name = Views;
 			sourceTree = "<group>";
 		};
 		A088E2EE1A112A200060B47D /* Assets */ = {
@@ -250,7 +237,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A088E2E71A1129560060B47D /* URBNCarouselZoomableCell.m in Sources */,
 				A088E2E81A1129560060B47D /* DestinationViewController.m in Sources */,
 				A088E2B91A1128DD0060B47D /* SourceViewController.m in Sources */,
 				A088E2B61A1128DD0060B47D /* AppDelegate.m in Sources */,
