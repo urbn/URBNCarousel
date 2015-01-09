@@ -116,11 +116,7 @@ const struct URBNScrollSyncCollectionViewIndexChangedNotification URBNScrollSync
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
-    CGFloat width = layout.minimumLineSpacing + layout.itemSize.width;
-    NSInteger index = (NSInteger)(self.contentOffset.x + (width/2)) / width;
-    
-    NSIndexPath *path = [NSIndexPath indexPathForItem:index inSection:0];
+    NSIndexPath *path = [self indexPathForItemAtPoint:self.contentOffset];
     NSDictionary *userInfo = @{URBNScrollSyncCollectionViewIndexChangedNotification.indexPathKey : path};
     [[NSNotificationCenter defaultCenter] postNotificationName:URBNScrollSyncCollectionViewIndexChangedNotification.name object:self userInfo:userInfo];
 }
