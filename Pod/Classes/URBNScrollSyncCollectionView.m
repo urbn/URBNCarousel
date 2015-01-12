@@ -133,8 +133,10 @@ const struct URBNScrollSyncCollectionViewIndexChangedNotification URBNScrollSync
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     NSIndexPath *path = [self indexPathForItemAtPoint:self.contentOffset];
-    NSDictionary *userInfo = @{URBNScrollSyncCollectionViewIndexChangedNotification.indexPathKey : path};
-    [[NSNotificationCenter defaultCenter] postNotificationName:URBNScrollSyncCollectionViewIndexChangedNotification.name object:self userInfo:userInfo];
+    if (path) {
+        NSDictionary *userInfo = @{URBNScrollSyncCollectionViewIndexChangedNotification.indexPathKey : path};
+        [[NSNotificationCenter defaultCenter] postNotificationName:URBNScrollSyncCollectionViewIndexChangedNotification.name object:self userInfo:userInfo];
+    }
 }
 
 @end
