@@ -26,12 +26,7 @@
         
         self.imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
-        _imageView.layer.borderColor = [UIColor redColor].CGColor;
-        _imageView.layer.borderWidth = 2.0;
         [self.scrollView addSubview:_imageView];
-        
-        self.layer.borderColor = [UIColor whiteColor].CGColor;
-        self.layer.borderWidth = 2.0;
     }
     return self;
 }
