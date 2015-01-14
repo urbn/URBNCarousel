@@ -12,8 +12,7 @@
 
 
 #pragma mark - Lifecycle
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
@@ -27,12 +26,16 @@
         self.imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.scrollView addSubview:_imageView];
+        
+        UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
+        [doubleTap setNumberOfTapsRequired:2];
+        [self.scrollView addGestureRecognizer:doubleTap];
     }
     return self;
 }
 
-- (void)setFrame:(CGRect)frame
-{
+#pragma mark - Layout
+- (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
     [self.scrollView setZoomScale:1.0 animated:YES];
     self.contentView.frame = self.bounds;
@@ -41,6 +44,21 @@
     self.scrollView.contentSize = self.imageView.bounds.size;
 }
 
+#pragma mark - Gestures
+- (void)handleDoubleTap:(UIGestureRecognizer *)gr {
+    if (self.scrollView.zoomScale > self.scrollView.minimumZoomScale) {
+        [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
+    }
+    else {
+        CGPoint point = [gr locationInView:self.scrollView];
+        CGPoint contentOffset = CGPointMake(point.x - (self.scrollView.frame.size.width / 2), point.y - (self.scrollView.frame.size.height / 2));
+        
+        [UIView animateWithDuration:0.4 animations:^{
+            [self.scrollView setContentOffset:contentOffset];
+            [self.scrollView setZoomScale:self.scrollView.maximumZoomScale animated:NO];
+        }];
+    }
+}
 
 #pragma mark - UIScrollViewDelegate
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
