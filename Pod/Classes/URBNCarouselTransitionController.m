@@ -55,7 +55,11 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 - (UIViewController<URBNCarouselTransitioning> *)trueContextViewControllerFromContext:(id <UIViewControllerContextTransitioning>)transitionContext withKey:(NSString *)key
 {
     UIViewController<URBNCarouselTransitioning> *vc = (UIViewController<URBNCarouselTransitioning> *)[transitionContext viewControllerForKey:key];
-    if ([vc isKindOfClass:[UINavigationController class]]) {
+    
+    // Here we're using topViewController directly to account for really custom transitions.
+    // If you have an un-traditional viewController stack then your custom containerVC can override this
+    // method to supply the topViewController
+    if ([vc respondsToSelector:@selector(topViewController)]) {
         vc = (UIViewController<URBNCarouselTransitioning> *)[((UINavigationController *)vc) topViewController];
     }
     return vc;
