@@ -52,18 +52,23 @@
     self.transitionController = [[URBNCarouselTransitionController alloc] init];
 }
 
-
 #pragma mark - Convenience
 - (void)presentGalleryController
 {
     DestinationViewController *vc = [[DestinationViewController alloc] initWithTransitionController:self.transitionController];
     vc.transitioningDelegate = self.transitionController;
     
+    //  In some cases the iOS will use your rootViewController as the presenting view controller - from documentation on presenting view controllers -
+    //  "When a view controller is presented, iOS searches for a presentation context. It starts at the presenting view controller by reading its definesPresentationContext property. If the value of this property is YES, then the presenting view controller defines the presentation context. Otherwise, it continues up through the view controller hierarchy until a view controller returns YES or until it reaches the window’s root view controller."
+    //  iOS8 allows this property to be set on iPhone view controllers, BUT iOS7 will ignore it.  The transition controller however has a check built in to set the correct presenting view controller in the event of iOS7.
+    if ([self respondsToSelector:@selector(setDefinesPresentationContext:)]) {
+        self.definesPresentationContext = YES;
+    }
+    
     [self presentViewController:vc animated:YES completion:^{
         [self.collectionView registerForSynchronizationWithCollectionView:vc.collectionView];
     }];
 }
-
 
 #pragma mark - GalleryTransitioning
 - (void)willBeginGalleryTransitionWithImageView:(UIImageView *)imageView isToVC:(BOOL)isToVC

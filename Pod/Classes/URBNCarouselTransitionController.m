@@ -57,7 +57,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 {
     UIViewController<URBNCarouselTransitioning> *vc = (UIViewController<URBNCarouselTransitioning> *)[transitionContext viewControllerForKey:key];
     
-    // Unless the view controller who called presentViewController sets definePresentationContext = YES; , the vc will be the rootViewController, who will not conform to the URBNTransitioning protocol.  In this case the trueContextViewController should be the source set by animationControllerForPresentedController.
+    // Unless the view controller who called presentViewController sets definePresentationContext = YES; (on iPhone, +iOS8 , the vc will be the rootViewController, who will not conform to the URBNTransitioning protocol.  In this case the trueContextViewController should be the source set by animationControllerForPresentedController.
     if (![vc conformsToProtocol:@protocol(URBNCarouselTransitioning)]) {
         vc = (UIViewController<URBNCarouselTransitioning> *)self.sourceViewController;
     }
