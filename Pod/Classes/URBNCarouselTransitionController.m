@@ -26,6 +26,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 @property(nonatomic, assign) CGFloat startScale;
 @property(nonatomic, assign) CGFloat springCompletionSpeed;
 @property(nonatomic, assign) CGFloat completionSpeed;
+@property(nonatomic, strong) UIViewController *sourceViewController;
 
 @end
 
@@ -55,6 +56,11 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 - (UIViewController<URBNCarouselTransitioning> *)trueContextViewControllerFromContext:(id <UIViewControllerContextTransitioning>)transitionContext withKey:(NSString *)key
 {
     UIViewController<URBNCarouselTransitioning> *vc = (UIViewController<URBNCarouselTransitioning> *)[transitionContext viewControllerForKey:key];
+    
+    // Unless the view controller who called presentViewController sets definePresentationContext = YES; (on iPhone, +iOS8 , the vc will be the rootViewController, who will not conform to the URBNTransitioning protocol.  In this case the trueContextViewController should be the source set by animationControllerForPresentedController.
+    if (![vc conformsToProtocol:@protocol(URBNCarouselTransitioning)]) {
+        vc = (UIViewController<URBNCarouselTransitioning> *)self.sourceViewController;
+    }
     
     // Here we're using topViewController directly to account for really custom transitions.
     // If you have an un-traditional viewController stack then your custom containerVC can override this
@@ -381,6 +387,8 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
 #pragma mark - UIViewControllerTransitioningDelegate
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
 {
+    // In iOS7 the default presentingSourceViewController is the rootViewController, while the source VC, the one we actually want as the fromVC, is the source (who calls the presentViewController method)
+    self.sourceViewController = source;
     return self;
 }
 
