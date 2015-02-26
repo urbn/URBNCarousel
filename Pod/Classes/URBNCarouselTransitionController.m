@@ -91,6 +91,9 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionState) {
     UIViewController<URBNCarouselTransitioning> *topFromVC = [self trueContextViewControllerFromContext:transitionContext withKey:UITransitionContextFromViewControllerKey];
     UIViewController<URBNCarouselTransitioning> *topToVC = [self trueContextViewControllerFromContext:transitionContext withKey:UITransitionContextToViewControllerKey];
     
+    toView.frame = containerView.bounds;
+    [toView setNeedsLayout];
+    [toView layoutIfNeeded];
     
     NSAssert([topFromVC conformsToProtocol:@protocol(URBNCarouselTransitioning)], @"GalleryTransitionController -- fromVC doesn't conform to protocol");
     NSAssert([topToVC conformsToProtocol:@protocol(URBNCarouselTransitioning)], @"GalleryTransitionController -- toVC doesn't conform to protocol");
