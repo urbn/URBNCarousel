@@ -7,6 +7,7 @@
 //
 
 #import "URBNScrollSyncCollectionView.h"
+#import <URBNConvenience/URBNConvenience.h>
 
 const struct URBNScrollSyncCollectionViewIndexChangedNotification {
     __unsafe_unretained NSString * name;
@@ -48,6 +49,9 @@ const struct URBNScrollSyncCollectionViewIndexChangedNotification URBNScrollSync
     NSAssert([self.collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]], @"Cannot use URBNScrollSyncCollectionView with non flow layout");
     self.animateScrollSync = NO;
     self.delegate = self;
+    if (SYSTEM_VERSION_LESS_THAN(@"9.0")) {
+        [self setUpPassThroughDelegateWithDelegate:self.delegate];
+    }
 }
 
 - (void)dealloc
@@ -55,6 +59,31 @@ const struct URBNScrollSyncCollectionViewIndexChangedNotification URBNScrollSync
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)setUpPassThroughDelegateWithDelegate:(id <UICollectionViewDelegate>)delegate {
+    if (delegate != self) {
+        /**
+         So this is a fun one...
+         There appears to be some sort of internal optimization that caches the
+         selectors the delegate responds to up front. Because of this, if the
+         scrollView sets itself as the delegate before we have a passThroughDelegate
+         and the scrollView doesn't implement the optional delegate methods, setting the
+         passThoughDelegate later won't rebuild the cache (because internally the delegate
+         doesn't change) and consequently won't get forwarded events.
+
+         The solution here is to nil out the delegate which resets the cache causing
+         it to rebuild every time we set a non-self delegate.
+
+         For what it's worth, I don't believe this optimization used to exist because I've
+         used code like this before without issue.
+         */
+        self.passThroughDelegate = delegate;
+        [super setDelegate:nil];
+    }
+
+    [super setDelegate:self];
+}
+
+#pragma mark - Overrides
 - (BOOL)respondsToSelector:(SEL)aSelector
 {
     if ([super respondsToSelector:aSelector]) {
@@ -85,6 +114,7 @@ const struct URBNScrollSyncCollectionViewIndexChangedNotification URBNScrollSync
         NSLog(@"%@", exception);
     }
 }
+
 
 #pragma mark - Scroll Sync
 - (void)syncIndexPathChanged:(NSNotification *)note
