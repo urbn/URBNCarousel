@@ -7,7 +7,6 @@
 //
 
 #import "URBNScrollSyncCollectionView.h"
-#import <URBNConvenience/URBNConvenience.h>
 
 const struct URBNScrollSyncCollectionViewIndexChangedNotification {
     __unsafe_unretained NSString * name;
@@ -49,7 +48,8 @@ const struct URBNScrollSyncCollectionViewIndexChangedNotification URBNScrollSync
     NSAssert([self.collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]], @"Cannot use URBNScrollSyncCollectionView with non flow layout");
     self.animateScrollSync = NO;
     self.delegate = self;
-    if (SYSTEM_VERSION_LESS_THAN(@"9.0")) {
+
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"9.0" options:NSNumericSearch] == NSOrderedAscending) {
         [self setUpPassThroughDelegateWithDelegate:self.delegate];
     }
 }
@@ -59,9 +59,12 @@ const struct URBNScrollSyncCollectionViewIndexChangedNotification URBNScrollSync
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+
+// TODO - update with less hacky code.  Rather than have both collection views listening to a posted notification, have them communicate where in the index path they should be when they transition back and forth.
 - (void)setUpPassThroughDelegateWithDelegate:(id <UICollectionViewDelegate>)delegate {
     if (delegate != self) {
         /**
+         // Comment by Demitri Miller
          So this is a fun one...
          There appears to be some sort of internal optimization that caches the
          selectors the delegate responds to up front. Because of this, if the
@@ -114,7 +117,6 @@ const struct URBNScrollSyncCollectionViewIndexChangedNotification URBNScrollSync
         NSLog(@"%@", exception);
     }
 }
-
 
 #pragma mark - Scroll Sync
 - (void)syncIndexPathChanged:(NSNotification *)note
