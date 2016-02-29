@@ -50,7 +50,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionInteractiveDirection) {
 
 @required
 // Return the image to transition
-- (UIImage * _Nullable )imageForGalleryTransition;
+- (UIImage * _Nullable)imageForGalleryTransition;
 - (CGRect)fromImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView;
 - (CGRect)toImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView sourceImageFrame:(CGRect)sourceImageFrame;
 
