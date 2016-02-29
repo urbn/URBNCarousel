@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class URBNCarouselTransitionController;
 
 typedef void(^URBNCarouselViewInteractionBeganBlock)(URBNCarouselTransitionController *controller, UIView *view);
@@ -48,7 +50,7 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionInteractiveDirection) {
 
 @required
 // Return the image to transition
-- (UIImage *)imageForGalleryTransition;
+- (UIImage * _Nullable)imageForGalleryTransition;
 - (CGRect)fromImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView;
 - (CGRect)toImageFrameForGalleryTransitionWithContainerView:(UIView *)containerView sourceImageFrame:(CGRect)sourceImageFrame;
 
@@ -74,3 +76,5 @@ typedef NS_ENUM(NSUInteger, URBNCarouselTransitionInteractiveDirection) {
 - (void)registerInteractiveGesturesWithView:(UIView *)view interactionBeganBlock:(URBNCarouselViewInteractionBeganBlock)interactionBeganBlock;
 
 @end
+
+NS_ASSUME_NONNULL_END
