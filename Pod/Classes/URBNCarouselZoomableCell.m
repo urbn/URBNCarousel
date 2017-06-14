@@ -34,6 +34,12 @@
     return self;
 }
 
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    
+    self.imageView.image = nil;
+}
+
 #pragma mark - Layout
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
